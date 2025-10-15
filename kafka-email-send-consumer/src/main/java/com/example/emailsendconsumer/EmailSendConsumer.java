@@ -3,7 +3,6 @@ package com.example.emailsendconsumer;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,7 +10,8 @@ public class EmailSendConsumer {
 
     @KafkaListener(
         topics = "email.send",
-        groupId = "email-send-group"
+        groupId = "email-send-group",
+        concurrency = "3"
     )
     @RetryableTopic(
         attempts = "5",
